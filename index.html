@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Nani | Luxury Boutique Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --jet-black: #0a0a0a;
+            --gold-metallic: #d4af37;
+            --gold-light: #f1d592;
+            --soft-white: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--jet-black);
+            color: var(--soft-white);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        /* Estilo de Cristal Líquido Refinado */
+        .glass-menu {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: -20px 0 50px rgba(0,0,0,0.5);
+        }
+
+        /* Transiciones de Página */
+        .page-section {
+            display: none;
+            min-height: calc(100vh - 80px);
+            animation: fadeIn 0.6s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .nav-active {
+            color: var(--gold-metallic) !important;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(to right, var(--gold-light), var(--gold-metallic));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Menú lateral estrecho */
+        #mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px; /* Ancho reducido para que no abarque mucho */
+            max-width: 80%; /* Resguardo para pantallas muy pequeñas */
+            height: 100%;
+            z-index: 1000;
+            transition: right 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        #mobile-menu.active { right: 0; }
+
+        .btn-gold {
+            background: linear-gradient(45deg, #d4af37, #f1d592);
+            color: #000;
+            transition: all 0.3s ease;
+            letter-spacing: 0.2em;
+            font-size: 10px;
+        }
+
+        .service-card {
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.5s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--gold-metallic);
+            transform: translateY(-5px);
+        }
+
+        /* Overlay para cerrar al tocar fuera */
+        #menu-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 900;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #menu-overlay.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="h-[80px] sticky top-0 z-[500] px-6 bg-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto h-full flex justify-between items-center">
+            <a href="javascript:void(0)" onclick="showPage('home')" class="flex items-center gap-3">
+                <span class="text-xl font-bold uppercase tracking-[0.3em] gold-gradient-text">Studio Nani</span>
+            </a>
+            
+            <!-- Desktop Links -->
+            <div class="hidden md:flex gap-10 font-medium uppercase text-[10px] tracking-[0.3em]">
+                <a href="javascript:void(0)" onclick="showPage('home')" class="nav-btn hover:text-gold-light transition" id="nav-home">Home</a>
+                <a href="javascript:void(0)" onclick="showPage('about')" class="nav-btn hover:text-gold-light transition" id="nav-about">Philosophy</a>
+                <a href="javascript:void(0)" onclick="showPage('services')" class="nav-btn hover:text-gold-light transition" id="nav-services">Portfolio</a>
+                <a href="javascript:void(0)" onclick="showPage('contact')" class="nav-btn hover:text-gold-light transition" id="nav-contact">Inquiries</a>
+            </div>
+
+            <!-- Hamburger Button -->
+            <button onclick="toggleMenu()" class="text-gold-metallic text-xl p-2">
+                <i class="fas fa-bars-staggered"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Overlay & Menú lateral -->
+    <div id="menu-overlay" onclick="toggleMenu()"></div>
+    <div id="mobile-menu" class="glass-menu flex flex-col p-8">
+        <div class="flex justify-between items-center mb-16">
+            <span class="text-[10px] tracking-[0.4em] text-gray-500 uppercase">Navigation</span>
+            <button onclick="toggleMenu()" class="text-gold-light text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="flex flex-col gap-8 text-xl font-light tracking-widest uppercase">
+            <a href="javascript:void(0)" onclick="showPage('home'); toggleMenu()" class="hover:text-gold-metallic transition">Home</a>
+            <a href="javascript:void(0)" onclick="showPage('about'); toggleMenu()" class="hover:text-gold-metallic transition">Philosophy</a>
+            <a href="javascript:void(0)" onclick="showPage('services'); toggleMenu()" class="hover:text-gold-metallic transition">Portfolio</a>
+            <a href="javascript:void(0)" onclick="showPage('contact'); toggleMenu()" class="hover:text-gold-metallic transition">Contact</a>
+        </div>
+
+        <div class="mt-auto border-t border-white/10 pt-8">
+            <p class="text-[9px] tracking-[0.3em] text-gray-500 uppercase mb-4">Appointments</p>
+            <p class="text-xs text-gold-metallic">+1 (555) 789-NANI</p>
+            <div class="flex gap-4 mt-6 text-gray-400">
+                <i class="fab fa-instagram hover:text-gold-metallic transition"></i>
+                <i class="fab fa-whatsapp hover:text-gold-metallic transition"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTIONS -->
+    <main>
+        <!-- HOME -->
+        <section id="home" class="page-section active">
+            <div class="max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center gap-16 min-h-[80vh]">
+                <div class="flex-1 space-y-8">
+                    <span class="text-gold-metallic uppercase tracking-[0.4em] text-[10px]">High-End Beauty Boutique</span>
+                    <h1 class="text-5xl md:text-7xl font-bold leading-tight">Elite Lash & <br><span class="gold-gradient-text italic">Brow Artistry.</span></h1>
+                    <p class="text-gray-400 text-sm max-w-sm font-light leading-relaxed">Where medical precision meets aesthetic perfection. Discover the art of a curated look.</p>
+                    <div class="pt-4">
+                        <button onclick="showPage('services')" class="btn-gold px-10 py-4 rounded-none font-bold uppercase">The Selection</button>
+                    </div>
+                </div>
+                <div class="flex-1 relative">
+                    <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=800" alt="" class="w-full grayscale shadow-2xl brightness-75">
+                </div>
+            </div>
+        </section>
+
+        <!-- PHILOSOPHY (ABOUT) -->
+        <section id="about" class="page-section bg-[#050505]">
+            <div class="max-w-3xl mx-auto px-6 py-32 text-center space-y-12">
+                <h2 class="text-gold-metallic uppercase tracking-[0.4em] text-[10px] font-bold">The Philosophy</h2>
+                <h3 class="text-4xl md:text-5xl font-bold italic">Impeccable aesthetics.</h3>
+                <p class="text-gray-500 text-lg font-light leading-relaxed">
+                    Studio Nani is a sanctuary for those who value detail. We don't believe in generic beauty; we believe in bespoke transformations that enhance your unique character using elite-grade materials.
+                </p>
+                <div class="grid grid-cols-3 gap-8 pt-12">
+                    <div class="space-y-2">
+                        <span class="text-2xl gold-gradient-text font-bold italic">01</span>
+                        <h4 class="uppercase tracking-widest text-[9px] text-gray-400">Artistry</h4>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-2xl gold-gradient-text font-bold italic">02</span>
+                        <h4 class="uppercase tracking-widest text-[9px] text-gray-400">Precision</h4>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-2xl gold-gradient-text font-bold italic">03</span>
+                        <h4 class="uppercase tracking-widest text-[9px] text-gray-400">Luxury</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO (SERVICES) -->
+        <section id="services" class="page-section">
+            <div class="max-w-7xl mx-auto px-6 py-24">
+                <div class="mb-20 text-center">
+                    <h2 class="text-4xl font-bold mb-4">The Collection</h2>
+                    <p class="text-gray-600 uppercase tracking-[0.3em] text-[9px]">Professional Services Menu</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div class="service-card group">
+                        <div class="overflow-hidden h-[400px]">
+                            <img src="https://images.unsplash.com/photo-1583001931096-959e9a1a6223?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700">
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <h3 class="text-xl font-bold uppercase tracking-widest">Lash Design</h3>
+                            <p class="text-gray-600 text-[11px] leading-relaxed">Tailored sets from natural classic to dramatic Russian volume.</p>
+                            <p class="text-gold-metallic text-xs font-bold">$95 — $150</p>
+                        </div>
+                    </div>
+
+                    <div class="service-card group">
+                        <div class="overflow-hidden h-[400px]">
+                            <img src="https://images.unsplash.com/photo-1595475241949-0f02b288d5f4?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700">
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <h3 class="text-xl font-bold uppercase tracking-widest">Brow Styling</h3>
+                            <p class="text-gray-600 text-[11px] leading-relaxed">Lamination and architectural shaping with tinting.</p>
+                            <p class="text-gold-metallic text-xs font-bold">$55 — $85</p>
+                        </div>
+                    </div>
+
+                    <div class="service-card group">
+                        <div class="overflow-hidden h-[400px]">
+                            <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700">
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <h3 class="text-xl font-bold uppercase tracking-widest">Hair Rituals</h3>
+                            <p class="text-gray-600 text-[11px] leading-relaxed">Luxury hydration and styling for high-profile events.</p>
+                            <p class="text-gold-metallic text-xs font-bold">$70 — $120</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="page-section">
+            <div class="max-w-5xl mx-auto px-6 py-24 text-center">
+                <h2 class="text-5xl font-bold mb-8">Secure your <span class="gold-gradient-text">Transformation.</span></h2>
+                <p class="text-gray-400 max-w-xl mx-auto mb-16 font-light">By appointment only. Please contact our concierge via WhatsApp or use the form below to inquire about availability.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                    <div class="bg-[#111] p-10 border border-white/5 space-y-6">
+                        <h4 class="text-xs uppercase tracking-widest text-gold-metallic">Concierge Service</h4>
+                        <div class="flex items-center gap-4 text-sm">
+                            <i class="fas fa-map-pin text-gray-600"></i>
+                            <span>7th Avenue, Chelsea, NY</span>
+                        </div>
+                        <div class="flex items-center gap-4 text-sm">
+                            <i class="fab fa-whatsapp text-gray-600"></i>
+                            <span>+1 (555) 789-NANI</span>
+                        </div>
+                        <button class="w-full btn-gold py-4 font-bold mt-4">Start Chat</button>
+                    </div>
+                    
+                    <div class="bg-[#111] p-10 border border-white/5">
+                        <div class="space-y-4">
+                            <input type="text" placeholder="NAME" class="w-full bg-transparent border-b border-white/10 py-3 text-[10px] tracking-widest outline-none focus:border-gold-metallic transition">
+                            <input type="email" placeholder="EMAIL" class="w-full bg-transparent border-b border-white/10 py-3 text-[10px] tracking-widest outline-none focus:border-gold-metallic transition">
+                            <textarea placeholder="MESSAGE" class="w-full bg-transparent border-b border-white/10 py-3 text-[10px] tracking-widest outline-none focus:border-gold-metallic transition h-20"></textarea>
+                            <button class="w-full border border-gold-metallic/30 py-4 text-[10px] uppercase tracking-widest hover:bg-gold-metallic hover:text-black transition">Send Request</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-16 text-center border-t border-white/5 text-gray-600">
+        <p class="text-[9px] tracking-[0.5em] uppercase">© 2026 Studio Nani • Pure Excellence</p>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const target = document.getElementById(pageId);
+            if(target) target.classList.add('active');
+
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => btn.classList.remove('nav-active'));
+            
+            const activeBtn = document.getElementById('nav-' + pageId);
+            if(activeBtn) activeBtn.classList.add('nav-active');
+
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('menu-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        window.onload = () => { showPage('home'); };
+    </script>
+</body>
+</html>
+
